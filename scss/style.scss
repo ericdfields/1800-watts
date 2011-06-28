@@ -208,11 +208,26 @@ html,body,#container,#main {
   height: 100%;
 }
 body {
-  background: #222;
+  background: $bodyBackground_color;
 }             
 #main {
   position: relative;
   margin: 0 auto;   
+}     
+.js article {
+  visibility: hidden;
+}              
+.js #main > div article {
+  visibility: visible;
+}         
+#current-article,#previous-articles {
+  position: relative;
+}               
+#current-article {
+  z-index: 1000;                   
+}     
+#previous-articles {
+  z-index: 1100;
 }
 article {           
   position: absolute;
@@ -223,22 +238,45 @@ article {
   @include border-radius(3px);
   color: white;
   header {
-    padding: 1em;
+    padding: 1em; 
+    opacity: 1;           
   }           
-  @include transition(all,0.4s,ease-in-out);
+  @include transition(all,0.5s,ease-in-out);
   @include translateY(100px);
+  opacity: 1;
 }           
-@for $i from 1 through 5 {
-  article:nth-child(5n+#{$i}) {
-    @if ($i > 1) {
-      background: darken($articleBackground_color,$i*7%);
-    }
-    $newScale: 1 - ($i * .05); 
-    $newTranslate: 100px - ($i * 22px);
-    @include simple-transform($scale:$newScale,$trans-y:$newTranslate);
+@for $i from 1 through 4 {
+  #next-articles article:nth-child(5n+#{$i}) {
+    $newScale: 1 - ($i * .03); 
+    $newTranslate: 100px - ($i * 15px);
+//    @if ($i > 1) {
+      background: mix($articleBackground_color,$bodyBackground_color,(85% * (100/$i)/100));
+      @include simple-transform($scale:$newScale,$trans-y:$newTranslate); 
+      header {
+        opacity: 0;
+      }
+//    }                                                    
     z-index: round(100/$i);
   }
+}
+#previous-articles {
+  article {        
+    -webkit-animation-name: bounce;
+    -webkit-animation-duration: 0.5s;
+    opacity: 0;
+  }
 } 
+
+@-webkit-keyframes bounce {
+ from {
+   @include translateY(100px);     
+   opacity: 1;
+ }
+ to {
+   @include simple-transform($scale:1.1,$trans-y:100px);
+   opacity: 0;
+ }
+}
 
 #footer {
   position: absolute;
