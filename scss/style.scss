@@ -1,4 +1,5 @@
 @import "variables";              
+@import "compass/css3/box-shadow";
 @import "compass/css3/border-radius";
 @import "compass/css3/transform";
 @import "compass/css3/transition";
@@ -214,21 +215,12 @@ body {
   position: relative;
   margin: 0 auto;   
 }     
-.js article {
-  visibility: hidden;
-}              
-.js #main > div article {
-  visibility: visible;
-}         
-#current-article,#previous-articles {
-  position: relative;
-}               
-#current-article {
-  z-index: 1000;                   
-}     
-#previous-articles {
-  z-index: 1100;
-}
+//.js article {
+//  visibility: hidden;
+//}              
+//.js #main > div article {
+//  visibility: visible;
+//}           
 article {           
   position: absolute;
   background: $articleBackground_color;
@@ -244,11 +236,11 @@ article {
   section {
     margin: 20px;
     font-size: 16px;
-    height: 400px;
+    height: 380px;
     overflow: scroll;
     overflow-x: hidden;
     & > * {
-      width: 80%;
+      width: 66.667%;
     }
       &::-webkit-scrollbar {
       	position: relative;
@@ -284,7 +276,7 @@ article {
       }
   }        
   @include transition(all,0.5s,ease-in-out);
-  @include translateY(100px);
+  @include translateY($trans);
   opacity: 1;
   font-family: 'Maven Pro';
   color: white
@@ -294,36 +286,55 @@ h2 {
   font-weight: normal;
   margin: 0;
 }
-@for $i from 1 through 4 {
-  #next-articles article:nth-child(5n+#{$i}) {
+@for $i from 1 through 4 {   
+  .next:nth-last-child(#{5-$i}) {
     $newScale: 1 - ($i * .03); 
-    $newTranslate: 100px - ($i * 15px);
+    $newTranslate: 50px - ($i * 15px);
 //    @if ($i > 1) {
       background: mix($articleBackground_color,$bodyBackground_color,(85% * (100/$i)/100));
       @include simple-transform($scale:$newScale,$trans-y:$newTranslate); 
-      header {
-        opacity: 0;
-      }
 //    }                                                    
     z-index: round(100/$i);
   }
+}    
+.current {
+  z-index: 1000;                   
+//  @include box-shadow(rgba(0,0,0,0.35) 0 6px 10px -4px);
+}     
+.prev {
+  z-index: 1100;
+  -webkit-animation-name: prevify;
+  -webkit-animation-duration: 0.5s;
+  opacity: 0;
+}   
+.un-prev {
+//  z-index: 1200;
+  -webkit-animation-name: unprevify;
+  -webkit-animation-duration: 0.5s;
+  opacity: 1;
 }
-#previous-articles {
-  article {        
-    -webkit-animation-name: bounce;
-    -webkit-animation-duration: 0.5s;
-    opacity: 0;
-  }
-} 
+.next header {
+  opacity: 0;
+}
 
-@-webkit-keyframes bounce {
+@-webkit-keyframes prevify {
  from {
-   @include translateY(100px);     
+   @include translateY(50px);     
    opacity: 1;
  }
  to {
-   @include simple-transform($scale:1.1,$trans-y:100px);
+   @include simple-transform($scale:1.1,$trans-y:50px);
    opacity: 0;
+ }
+}   
+@-webkit-keyframes unprevify {
+ from {
+   @include simple-transform($scale:1.1,$trans-y:50px);
+   opacity: 0;
+ }
+ to {
+   @include translateY(50px);     
+   opacity: 1;
  }
 }
 
@@ -332,7 +343,15 @@ h2 {
   top: 0;
   left: 0;
 }
-
+  
+button {
+  background: rgba(0,0,0,0.35);
+  border: none;
+  color: white;
+  font-size: 50px;
+  font-weight: bold;
+  @include border-radius(50px);
+}
 
 
 
