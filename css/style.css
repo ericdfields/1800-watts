@@ -381,10 +381,57 @@ article {
   -ms-transform: translateY(100px);
   transform: translateY(100px);
   opacity: 1;
+  font-family: 'Maven Pro';
+  color: white;
 }
 article header {
-  padding: 1em;
+  margin: 20px;
   opacity: 1;
+}
+article section {
+  margin: 20px;
+  font-size: 16px;
+  height: 400px;
+  overflow: scroll;
+  overflow-x: hidden;
+  /*  &:hover::-webkit-scrollbar-track:vertical {
+      background: rgba(0,0,0,0.1);
+    }                                        */
+}
+article section > * {
+  width: 80%;
+}
+article section::-webkit-scrollbar {
+  position: relative;
+  width: 8px;
+}
+article section::-webkit-scrollbar-track:vertical {
+  margin-top: 11px;
+  margin-right: 6px;
+  position: relative;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+}
+article section::-webkit-scrollbar-thumb:vertical:hover {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+article section::-webkit-scrollbar-thumb:vertical:active, article section ::-webkit-scrollbar-thumb:vertical:focus {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+article section::-webkit-scrollbar-thumb:vertical {
+  background-color: rgba(0, 0, 0, 0.5);
+  min-height: 20px;
+  border: none;
+  opacity: 1;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  position: relative;
+}
+
+h2 {
+  font-size: 24px;
+  font-weight: normal;
+  margin: 0;
 }
 
 #next-articles article:nth-child(5n+1) {
